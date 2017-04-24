@@ -25,9 +25,8 @@ public class lastOne extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 
-	/**
-	 * Launch the application.
-	 */
+	
+	//instantiates lastOne and runs the frame.
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -41,13 +40,13 @@ public class lastOne extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	
+	 //Creates a new connection to the database.
 	private JTextField textField_1;
 	Connection conn=null;
 	
 	public lastOne() {
+		
 		conn=SQLconnection.dbConnector();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 360);
@@ -60,6 +59,9 @@ public class lastOne extends JFrame {
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.BOLD, 16));
 		lblNewLabel.setBounds(152, 16, 87, 16);
 		contentPane.add(lblNewLabel);
+		
+		//This section creates and places the JradioButtons, Buttons
+		//Jlabels and Jtextfields.
 		
 		JRadioButton rdbtnNewRadioButton = new JRadioButton("Cash Payment");
 		rdbtnNewRadioButton.setBounds(29, 59, 141, 23);
@@ -144,7 +146,7 @@ public class lastOne extends JFrame {
 		btnNewButton_1.setBounds(271, 1, 101, 29);
 		panel_1.add(btnNewButton_1);
 		
-		
+		//This creates the back button and set an action listener to it.
 		JButton btnNewButton_2 = new JButton("");
 		Image backbutton = new ImageIcon(this.getClass().getResource("/back-icon.png")).getImage();
 		btnNewButton_2.setIcon(new ImageIcon(backbutton));
@@ -160,6 +162,7 @@ public class lastOne extends JFrame {
 		btnNewButton_2.setBounds(6, 3, 71, 29);
 		contentPane.add(btnNewButton_2);
 		
+		//This creates the logout button and adds the AL to it.
 		JButton button = new JButton("Log out");
 		Image exit = new ImageIcon(this.getClass().getResource("/exit.png")).getImage();
 		button.setIcon(new ImageIcon(exit));
@@ -174,18 +177,27 @@ public class lastOne extends JFrame {
 		contentPane.add(button);
 		lblNewLabel_6.setVisible(false);
 		
-		
+		//Decides what happens and which frames are shown for 
+		//different RadioButton selections.
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ButtonGroup bg=new ButtonGroup();
 				bg.add(rdbtnNewRadioButton);
 				bg.add(rdbtnNewRadioButton_1);
 				
+				// If no radio buttons are selected then the user is prompted to 
+				//select one.
 				if(bg.getSelection()==null){
 					JOptionPane.showMessageDialog(null, "Please select an option.");
+					
+					//If this radio button is selected the the cash panel is shown and 
+					//the user can check out with cash.
+					
 				}else if(rdbtnNewRadioButton.isSelected()){
 					panel.setVisible(true);
 					
+					//trys to connect to the database to query table Guests where the room number is 
+					//equal to the room number entered in the last pane.
 					try{
 						String rmNum=EmpCheckOut.TField();
 						
@@ -201,12 +213,18 @@ public class lastOne extends JFrame {
 						
 						
 						
+						//Sets the label to the total that is pulled back from the 
+						//specific guest that was searched for.
 						
-						lblNewLabel_3.setText("$ "+tots);
+						lblNewLabel_3.setText("$ "+tots+"0");
 						JButton btnCheckout = new JButton("Check-Out");
 						btnCheckout.setBounds(116, 68, 117, 29);
 						panel.add(btnCheckout);
 						
+						
+						//This section subtracts the the total for the guest from the entered total 
+						//in the text field.
+						//It also returns the change.
 						btnCheckout.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 								String tend=textField.getText();
@@ -216,9 +234,10 @@ public class lastOne extends JFrame {
 								
 								String change2=Double.toString(change);
 								
-								lblNewLabel_5.setText("$ "+change2);
+								lblNewLabel_5.setText("$ "+change2+"0");
 								lblNewLabel_5.setVisible(true);
-								
+								//This section removes the guest from the table Guests and releases the room
+								//from table Rooms after the total has been paid.
 								try{
 									
 									String room=EmpCheckOut.TField();
@@ -253,7 +272,8 @@ public class lastOne extends JFrame {
 					}catch(Exception h){
 						JOptionPane.showMessageDialog(null, "Error");
 					}
-					
+				//This section is the credit card option for the JButtons.	If this jButton is is selected then
+					//a credit card number is entered 
 				}else{
 					panel_1.setVisible(true);
 					String tf=textField_1.getText();

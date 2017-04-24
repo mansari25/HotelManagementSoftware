@@ -233,6 +233,7 @@ public class EmpCheckOut extends JFrame {
 				btnNewButton_1.setVisible(false);
 				lblNewLabel_11.setVisible(true);
 				btnNewButton_3.setVisible(true);
+				btnNewButton_2.setVisible(false);
 				}catch(Exception f){
 					JOptionPane.showMessageDialog(null, "Cannot check out guest!");
 				}

@@ -31,9 +31,8 @@ public class Booking extends JFrame {
 	private JTextField textField;
 	private JTextField textField_1;
 
-	/**
-	 * Launch the application.
-	 */
+	//main code for the program to create
+	//and run the initial frame for class Booking
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -47,23 +46,25 @@ public class Booking extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
-	/**
-	 * 
-	 */
+	//Creates the Booking class so it can be instantiated in the main 
+	//program above.
+	//Also creates a new connection to the database.
 	Connection conn=null;
 	public Booking() {
+		//calls the dbConnector method from class SQLConnection
 		conn=SQLconnection.dbConnector();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 572, 553);
+		//Creates a new jpanel for everything to be displayed on.
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.LIGHT_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		//displays the welcome label with the user's name
+		//next to it. 
+		//Calls the getUser method from class login.
 		JLabel lblNewLabel = new JLabel();
 		lblNewLabel.setText("Welcome " + logIn.getUser()+"!");
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.BOLD, 16));
@@ -75,6 +76,9 @@ public class Booking extends JFrame {
 		contentPane.add(fnametextF);
 		fnametextF.setColumns(10);
 		
+		//This this the section of the class that 
+		//asks the user to enter all the information to 
+		//populate the database.
 		JLabel firstname = new JLabel("First Name*");
 		firstname.setBounds(6, 75, 74, 16);
 		contentPane.add(firstname);
@@ -102,7 +106,7 @@ public class Booking extends JFrame {
 		lblNewLabel_2.setIcon(new ImageIcon(card));
 		lblNewLabel_2.setBounds(296, 87, 297, 63);
 		contentPane.add(lblNewLabel_2);
-		
+		//Jdate needs jar file jdatepicker and jcalender
 		JDateChooser dateChooser = new JDateChooser();
 		
 		dateChooser.setDateFormatString("dd MM yyyy");
@@ -141,6 +145,8 @@ public class Booking extends JFrame {
 		contentPane.add(textField_1);
 		textField_1.setColumns(10);
 		
+		
+		
 		JButton btnNewButton = new JButton("Book Reservation");
 		Image book = new ImageIcon(this.getClass().getResource("/book.png")).getImage();
 		btnNewButton.setIcon(new ImageIcon(book));
@@ -174,6 +180,10 @@ public class Booking extends JFrame {
 		logo.setIcon(new ImageIcon(logo1));
 		logo.setBounds(6, 129, 558, 279);
 		contentPane.add(logo);
+		// This button actionlistener
+		//gets all the information that the guest entered 
+		// and add it to the sqlite database based on the username that 
+		//the user logged in with
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnNewButton.setVisible(false);
@@ -193,6 +203,9 @@ public class Booking extends JFrame {
 			    
 			    try{
 			    	String user=logIn.getUser();
+			    	//sql query that is used to update the db Guests
+			    	//where the the guests username= to the username for the 
+			    	//login.
 			    	String query="update Guests set firstname= ?, lastname=?, ccnum=?, ciDate=?, coDate=?, numGuests=? where username = ?";
 					PreparedStatement pst=conn.prepareStatement(query);
 					pst.setString(1, fname);
@@ -205,6 +218,9 @@ public class Booking extends JFrame {
 					pst.execute();	
 					btnNewButton_1.setVisible(true);
 					
+					//this section takes how many beds the user entered and 
+					//finds the first available room with that number of beds from table Rooms.
+					//It then assigns that room to the guest.
 					if(beds==1){
 						String q2= "UPDATE Rooms SET Avail=? WHERE RoomNum =(SELECT Roomnum FROM Rooms WHERE Beds='1' and Avail is null ORDER BY Roomnum LIMIT 1)";
 						PreparedStatement pst2=conn.prepareStatement(q2);
@@ -250,6 +266,7 @@ public class Booking extends JFrame {
 					
 						prep4.setString(2, lname);
 						prep4.execute();
+						//closes the connection for this class.
 						conn.close();
 						
 					}else{

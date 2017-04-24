@@ -6,9 +6,9 @@ public class Check {
 
 	private JFrame frame;
 
-	/**
-	 * Launch the application.
-	 */
+	//main code for the program to create
+	//and runs the initial frame for class Check
+	//launches the application
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

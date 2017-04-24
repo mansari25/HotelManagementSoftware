@@ -13,9 +13,6 @@ import java.awt.event.ActionEvent;
 
 public class EmpCheckIn extends JFrame {
 
-	/**
-	 * 
-	 */
 
 	private JPanel contentPane;
 	private JTextField textField;
@@ -37,7 +34,7 @@ public class EmpCheckIn extends JFrame {
 		});
 	}
 
-	
+	//Creates a new connection to the database.
 	Connection conn=null;
 	public EmpCheckIn() {
 		conn=SQLconnection.dbConnector();
@@ -49,6 +46,9 @@ public class EmpCheckIn extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		
+		//This section creates all the labels, buttons and textfields and 
+		//places them in the contentPane.
 		JLabel lblNewLabel = new JLabel("Check-In ");
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.BOLD, 16));
 		lblNewLabel.setBounds(217, 16, 81, 31);
@@ -103,6 +103,7 @@ public class EmpCheckIn extends JFrame {
 		lblNewLabel_7.setBounds(128, 62, 80, 16);
 		resPanel.add(lblNewLabel_7);
 		
+		
 		JButton btnNewButton_1 = new JButton("Check Guest In");
 		Image check = new ImageIcon(this.getClass().getResource("/check.png")).getImage();
 		btnNewButton_1.setIcon(new ImageIcon(check));
@@ -118,6 +119,12 @@ public class EmpCheckIn extends JFrame {
 		JButton btnNewButton = new JButton("Lookup Reservation");
 		Image search = new ImageIcon(this.getClass().getResource("/search.png")).getImage();
 		btnNewButton.setIcon(new ImageIcon(search));
+		
+		//This AL queries the table Guests where the first and last name are 
+		//equal to the the names provided in the textFields.
+		//It returns the Result set and then displays the 
+		//checkout date and  room number and number of guests for the guest.
+		
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
@@ -134,7 +141,8 @@ public class EmpCheckIn extends JFrame {
 				
 					int room=rs.getInt(6);
 					int guests=rs.getInt(10);
-					String coDate=rs.getString(11);
+					String coDate=rs.getString(12);
+					String ciDate=rs.getString(11);
 					String gsts=Integer.toString(guests);
 					String rm=Integer.toString(room);
 					lblNewLabel_3.setText(rm);
@@ -151,6 +159,10 @@ public class EmpCheckIn extends JFrame {
 				
 			}
 		});
+		
+		//This AL updates the guests total based on the number of beds the user enters.
+		//If the user is already checked in it will show that the guests is already
+		//checked in.
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
@@ -218,6 +230,7 @@ public class EmpCheckIn extends JFrame {
 		btnNewButton_2.setBounds(6, 494, 99, 36);
 		contentPane.add(btnNewButton_2);
 		
+		//This back button send the employee back to the previous panel. 
 		JButton btnNewButton_3 = new JButton("");
 		Image backbutton = new ImageIcon(this.getClass().getResource("/back-icon.png")).getImage();
 		btnNewButton_3.setIcon(new ImageIcon(backbutton));

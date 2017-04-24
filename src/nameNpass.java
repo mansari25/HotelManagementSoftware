@@ -78,6 +78,7 @@ public class nameNpass extends JFrame {
 		btnNewButton.setIcon(new ImageIcon(user));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				String p1=passwordField_1.getText();
 				String p2=passwordField.getText();
 
@@ -100,6 +101,7 @@ public class nameNpass extends JFrame {
 				}else{
 					JOptionPane.showMessageDialog(null, "Passwords do no match. Please try again.");
 				}
+				
 			}
 		});
 		btnNewButton.setBounds(143, 443, 226, 43);

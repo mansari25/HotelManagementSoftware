@@ -16,9 +16,7 @@ public class GuestInfo extends JFrame {
 
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
+	//instantiates the GuestInfo frame and runs the application.
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -32,11 +30,10 @@ public class GuestInfo extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	//Creates a new connection and sets it to null
 	Connection conn=null;
 	public GuestInfo() {
+		//calls method dbConnector from class SQLconnection.
 		conn=SQLconnection.dbConnector();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 523, 507);
@@ -46,6 +43,9 @@ public class GuestInfo extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		//This section creates all the 
+		//Jlabels, buttons and textfields and sets them 
+		//at their placed location.
 		JLabel lblNewLabel = new JLabel("Guest Options");
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.BOLD, 16));
 		lblNewLabel.setBounds(6, 6, 167, 25);
@@ -77,12 +77,16 @@ public class GuestInfo extends JFrame {
 		logo.setIcon(new ImageIcon(logo1));
 		logo.setBounds(-18, 113, 551, 282);
 		contentPane.add(logo);
+		
+		//This action listener looks for which button from Buttongroup bg is selected.
+		//Whichever one is selected a different panel for button is shown.
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ButtonGroup bg=new ButtonGroup();
 				bg.add(rdbtnNewRadioButton_1);
 				bg.add(rdbtnNewRadioButton_3);
 				
+				//if no button is selected the the user gets this prompt.
 				if(bg.getSelection()==null){
 					JOptionPane.showMessageDialog(null, "Please select an option.");
 				}else if(rdbtnNewRadioButton_3.isSelected()){

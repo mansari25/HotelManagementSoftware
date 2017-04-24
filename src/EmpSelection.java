@@ -93,7 +93,10 @@ public class EmpSelection extends JFrame {
 					EmpCheckOut co=new EmpCheckOut();
 					co.setVisible(true);
 				}else if(rdbtnNewRadioButton_2.isSelected()){
-					JOptionPane.showMessageDialog(null, "Please select an option3.");
+					setVisible(false);
+					roomNum rn= new roomNum();
+					rn.setVisible(true);
+					
 				}else{
 					setVisible(false);
 					EmpBooking eb=new EmpBooking();

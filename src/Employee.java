@@ -7,6 +7,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import java.awt.Font;
@@ -91,6 +92,8 @@ public class Employee extends JFrame {
 					EmpSelection es=new EmpSelection();
 					es.setVisible(true);
 					
+				}else{
+					JOptionPane.showMessageDialog(null, "Invalid Credentials.");
 				}
 			}
 		});

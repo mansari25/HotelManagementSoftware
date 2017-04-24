@@ -26,9 +26,9 @@ public class EmpBooking extends JFrame {
 
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
+	//main code for the program to create
+	//and run the initial frame for class EmpBooking
+	//launches the application
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -42,13 +42,17 @@ public class EmpBooking extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	//Creates the EmpBooking class so it can be instantiated in the main 
+	//program above.
+	//Also creates a new connection to the database.
 	Connection conn=null;
+	
+	//These are the texfields for the username and password that the 
+	//employee creates for the user
 	private JTextField textField_3;
 	private JTextField textField_4;
 	public EmpBooking() {
+		//creates a  new connection to the db.
 		conn=SQLconnection.dbConnector();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 537, 530);
@@ -57,6 +61,10 @@ public class EmpBooking extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		//This this the section of the class that 
+		//asks the user to enter all the information to 
+		//populate the database.
 		
 		JLabel lblNewLabel = new JLabel();
 		//lblNewLabel.setText("Welcome " + logIn.getUser()+"!");
@@ -145,6 +153,10 @@ public class EmpBooking extends JFrame {
 		Image exit = new ImageIcon(this.getClass().getResource("/exit.png")).getImage();
 		btnNewButton_1.setIcon(new ImageIcon(exit));
 		btnNewButton_1.setVisible(false);
+		
+		//This AL set the current pane visibility to 
+		//false and instantiates the Intial class.
+		//Logout Button
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
@@ -157,6 +169,8 @@ public class EmpBooking extends JFrame {
 				}
 			}
 		});
+		
+		//buttons for employee booking and checkin guest.
 		btnNewButton_1.setBounds(24, 447, 117, 36);
 		contentPane.add(btnNewButton_1);
 		
@@ -169,6 +183,9 @@ public class EmpBooking extends JFrame {
 		Image ok = new ImageIcon(this.getClass().getResource("/ok.png")).getImage();
 		btnNewButton_2.setIcon(new ImageIcon(ok));
 		btnNewButton_2.setVisible(false);
+		//This AL sets the visiblilty to false and instantiates the 
+		//new class EmpCheckIn
+		//Also closes the connection
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
@@ -207,6 +224,9 @@ public class EmpBooking extends JFrame {
 		logo.setIcon(new ImageIcon(logo1));
 		logo.setBounds(-13, 165, 532, 298);
 		contentPane.add(logo);
+		//This button takes all the fields that were 
+		//entered by the employee and populates the 
+		//table Guests.
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnNewButton_1.setVisible(true);
@@ -228,7 +248,8 @@ public class EmpBooking extends JFrame {
 			    String date2= sdf2.format(dateChooser_1.getDate());
 			    
 			    try{
-			    	
+			    	//sql statement to enter a guest into
+			    	//the table Guests from the employee side.
 			    	String query="insert into Guests (username, password, firstname, lastname, ccnum, ciDate, coDate, numGuests) values (?,?,?,?,?,?,?,?)";
 					PreparedStatement pst=conn.prepareStatement(query);
 					pst.setString(1, user);
@@ -242,8 +263,13 @@ public class EmpBooking extends JFrame {
 					pst.setInt(8, guests);
 					
 					pst.execute();	
-					btnNewButton_1.setVisible(true);
 					
+					//after the sql statement is executed,set
+					//button1 visibility to false
+					btnNewButton_1.setVisible(true);
+					//this section takes how many beds the user entered and 
+					//finds the first available room with that number of beds from table Rooms.
+					//It then assigns that room to the guest.
 					if(beds==1){
 						String q2= "UPDATE Rooms SET Avail=? WHERE RoomNum =(SELECT Roomnum FROM Rooms WHERE Beds='1' and Avail is null ORDER BY Roomnum LIMIT 1)";
 						PreparedStatement pst2=conn.prepareStatement(q2);
